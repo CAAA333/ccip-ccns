@@ -36,9 +36,6 @@ npx hardhat ccns-register --ccns-name anon.ccns
 npx hardhat ccns-lookup --ccns-name anon.ccns --network ethereumSepolia
 ℹ️  anon.ccns resolved with 0x1bF44b510871d45989E7524F97D7F2cB29aEB901
 
-npx hardhat ccns-lookup --ccns-name anon.ccns --network avalancheFuji
-ℹ️  anon.ccns resolved with 0x0000000000000000000000000000000000000000
-
 npx hardhat run scripts/deploy-destination-chain-step2.ts --network avalancheFuji
 Deploying contracts with the account: 0x1bF44b510871d45989E7524F97D7F2cB29aEB901
 Enabling chain...

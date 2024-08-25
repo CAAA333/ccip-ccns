@@ -1,3 +1,71 @@
+Results:
+set-up:
+
+npx hardhat deploy-source-chain
+ℹ️  Attempting to deploy CrossChainNameServiceLookup on the ethereumSepolia blockchain using 0x1bF44b510871d45989E7524F97D7F2cB29aEB901 address
+✅ CrossChainNameServiceLookup deployed at address 0x9d87D82D9C0dE2826CB2cBF43d8243b4a5F56735 on ethereumSepolia blockchain
+ℹ️  Attempting to deploy CrossChainNameServiceRegister on the ethereumSepolia blockchain using 0x1bF44b510871d45989E7524F97D7F2cB29aEB901 address
+✅ CrossChainNameServiceRegister deployed at address 0x35456f1c32995311597bc94d2cAC17b5D282d595 on ethereumSepolia blockchain
+ℹ️  Attempting to call the setCrossChainNameServiceAddress function on the CrossChainNameSServiceLookup smart contract
+✅ CCNS Address set, transaction hash: 0x637e14e0f19b27a189dc88000c067eaa27030b956a14dd2cb89111d5c7d78b47
+✅ Task deploy-source-chain finished with the execution
+
+npx hardhat deploy-destination-chain-step1 --network avalancheFuji
+ℹ️  Attempting to deploy CrossChainNameServiceLookup on the avalancheFuji blockchain usingg 0x1bF44b510871d45989E7524F97D7F2cB29aEB901 address
+✅ CrossChainNameServiceLookup deployed at address 0x4c72d588Aa7B8132f9F1F607A1B330f44ba2BdF0 on avalancheFuji blockchain
+ℹ️  Attempting to deploy CrossChainNameServiceReceiver on the avalancheFuji blockchain    
+✅ CrossChainNameServiceReceiver deployed at address 0xb1Ce19CbcDe0a68BCA4656719a930332aaBA7bF7 on avalancheFuji blockchain
+ℹ️  Attempting to call the setCrossChainNameServiceAddress function on the CrossChainNameSServiceLookup smart contract
+✅ CCNS Address set, transaction hash: 0x5d50985c28c0f398eb02752c74d3f71828db742f1fec9478b0fd6bf34df4e7cb
+✅ Task deploy-destination-chain-step1 finished with the execution
+
+
+npx hardhat fund --amount 100000000000000000
+ℹ️  Attempting to send 100000000000000000 wei to CrossChainNameServiceRegister smart contrract (0x35456f1c32995311597bc94d2cAC17b5D282d595) on the ethereumSepolia blockchain        
+✅ Transaction hash: 0x9ce22d979e85bbc3d43130bb9f146cd712ecc0e71dd3b28c34345c2b9d6bec84   
+✅ Task fund finished with the execution
+
+npx hardhat get-balance
+ℹ️  CrossChainNameServiceRegister balance (in wei): 100000000000000000
+
+npx hardhat ccns-register --ccns-name anon.ccns
+ℹ️  Attempting to call the register function on the CrossChainNameServiceRegister smart coontract with the name anon.ccns on the ethereumSepolia blockchain
+✅ Transaction hash: 0xeff511ffdee04a78c72a5035c2f9bd20d012fd4935187b1e032260d28e3f272a   
+✅ Task ccns-register finished with the execution
+
+npx hardhat ccns-lookup --ccns-name anon.ccns --network ethereumSepolia
+ℹ️  anon.ccns resolved with 0x1bF44b510871d45989E7524F97D7F2cB29aEB901
+
+npx hardhat ccns-lookup --ccns-name anon.ccns --network avalancheFuji
+ℹ️  anon.ccns resolved with 0x0000000000000000000000000000000000000000
+
+npx hardhat run scripts/deploy-destination-chain-step2.ts --network avalancheFuji
+Deploying contracts with the account: 0x1bF44b510871d45989E7524F97D7F2cB29aEB901
+Enabling chain...
+Chain enabled with transaction hash: 0xb6f97940e3275b9e9045fec2c69a406e3a5db71e57d9af2a9e40993ab694d47a
+
+npx hardhat test --network hardhat
+ CCIP Cross Chain Name Service - Register Alice, Lookup Alice and Return her EOA address from both chains
+alice's address:  0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
+CCIP Local simulator address:  0x5FbDB2315678afecb367f032d93F642f64180aa3
+CrossChainNameServiceLookup address:  0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512
+CrossChainNameServiceRegister address:  0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0
+CrossChainNameServiceLookup address:  0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9
+CrossChainNameServiceReceiver address:  0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9
+sourceSetCrossChainNameServiceAddress transaction:  0xce42a03c29ba01b95d7ae036dfbf7f7601329bae903b1b3a11436f89a4b6589d
+destinationSetCrossChainNameServiceAddress transaction:  0x43e0224bb6bcf70fc4b4aa0ad66d1d6757150e0a028d25fdeb95b28df21019d8
+sourceEnableChain transaction:  0xc707b256f09a426920ecb1c0c33e6ecf78a9ad98ad1f8d14f19538114ac4b712
+
+Registration successful:
+Returned source Lookup address:  0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
+Returned destination Lookup address:  0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
+    ✔ Should register alice.ccns on the source chain and check that the registering address is the same on both chains (57ms)
+
+  1 passing (1s)
+
+
+
+
 ## CCIP Cross Chain Name Service
 
 > **Note**
